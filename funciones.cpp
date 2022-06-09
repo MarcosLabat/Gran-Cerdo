@@ -29,7 +29,7 @@ void menuInicio(int &opcion){
 }
 
 //INICIO DEL JEUGO
-void iniciarJuego(string &nombre, string &nombre2, int &puntaje){
+void iniciarJuego(string &nombreGanador, string &nombreGanador2, int &puntaje){
     string nombresJugadores[2];
     cout << "\t\n INGRESE EL NOMBRE DEL PRIMER JUGADOR: ";
     cin >> nombresJugadores[0];
@@ -37,7 +37,7 @@ void iniciarJuego(string &nombre, string &nombre2, int &puntaje){
     cout << "\t\n INGRESE EL NOMBRE DEL SEGUNDO JUGADOR: ";
     cin >> nombresJugadores[1];
     Beep(500, 100);
-    rondas(nombresJugadores, nombre, nombre2, puntaje);
+    rondas(nombresJugadores, nombreGanador, nombreGanador2, puntaje);
 }
 
 //CONFIMACION SI SALE DEL JUEGO
@@ -88,23 +88,26 @@ void volverMenu(){
 }
 
 //MOSTRAR ESTADISTICAS
-void mostrarEstadisticas(int puntajeGanadores[], string nombresGanadores[], string nombreEmpate[]){
+void mostrarEstadisticas(string &nombreGanador, string &nombreGanador2, int &puntaje, int &puntajeMaximo){
     limpiarConsola();
-    if(puntajeGanadores[0] == 0){
-        cout << "\t\n NO HAY DATOS, JUEGUE Y VUELVA A CONSULTAR.";
-    }else{
-        int i = 0;
-        cout << "\t\t\n ------------------------------------------------";
-        while(puntajeGanadores[i] != 0){
-            if(nombresGanadores[i] != nombreEmpate[i]){
-                cout << "\t\n PARTIDA #" << i + 1 << ": EMPATE JUGARON: " << nombresGanadores[i] << " Y " << nombreEmpate[i]
-                << ",TERIMANRON CON " << puntajeGanadores[i] << " PUNTOS";
-            }else{
-                cout << "\t\n PARTIDA #" << i + 1 << ": GANO " << nombresGanadores[i] << " CON " << puntajeGanadores[i] << " PUNTOS";
-            }
-            i++;
+    if(puntaje == 0){
+        cout << "\t\n ---------------------------------------------";
+        cout << "\t\n | NO HAY DATOS, JUEGUE Y VUELVA A CONSULTAR |";
+        cout << "\t\n ---------------------------------------------";
+    }else if(nombreGanador == nombreGanador2){
+        if(puntaje > puntajeMaximo){
+            puntajeMaximo = puntaje;
+            cout << "\t\n --------------------------------------------------------------------------------------------------------";
+            cout << "\t\n EL JUGADOR CON MAYOR CANTIDAD DE PUNTOS ES " << nombreGanador << " CON LA CANTIDAD DE " << puntaje << " PDV";
+            cout << "\t\n --------------------------------------------------------------------------------------------------------";
         }
-        cout << "\t\t\n ------------------------------------------------";
+    }else{
+       if(puntaje > puntajeMaximo){
+            puntajeMaximo = puntaje;
+            cout << "\t\n ---------------------------------------------------------------------------------------------------------------------------------";
+            cout << "\t\n LOS JUGADORES CON MAYOR CANTIDAD DE PUNTOS SON " << nombreGanador << " Y " << nombreGanador2 << " CON LA CANTIDAD DE " << puntaje << " PDV";
+            cout << "\t\n ----------------------------------------------------------------------------------------------------------------------------------";
+        }
     }
 }
 
@@ -179,14 +182,14 @@ bool empiezaJugador(string nombresJugadores[]){
         dadosConseguido1 = dadosJug1[0] + dadosJug1[1];
         dadosConseguido2 = dadosJug2[0] + dadosJug2[1];
         if(dadosConseguido1 > dadosConseguido2){
-            cout << "\t\n COMIENZA " << nombresJugadores[0] << ". ";
+            cout << "\t\n SUMANDO LAS DOS CARAS, SACO MAYOR CANTIDAD. COMINEZA " << nombresJugadores[0] << ".";
             cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
             getch();
             Beep(500, 100);
             empiezaJugador = true;
             return true;
         }else if(dadosConseguido2 > dadosConseguido1){
-            cout << "\t\n COMIENZA " << nombresJugadores[1] << ". ";
+            cout << "\t\n SUMANDO LAS DOS CARAS, SACO MAYOR CANTIDAD. COMINEZA " << nombresJugadores[1] << ". ";
             cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
             getch();
             Beep(500, 100);
@@ -194,28 +197,28 @@ bool empiezaJugador(string nombresJugadores[]){
             return false;
         }else{
             if(dadosJug1[0] > dadosJug2[0] && dadosJug1[0] > dadosJug2[1]){
-                cout << "\t\n COMIENZA " << nombresJugadores[0] << ". ";
+                cout << "\t\n SUMA DE LAS DOS CARAS IGUAL, PERO TIENE MAYOR DADO INDIVIDUAL . COMIENZA " << nombresJugadores[0] << ". ";
                 cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
                 getch();
                 Beep(500, 100);
                 empiezaJugador = true;
                 return true;
             }else if(dadosJug1[1] > dadosJug2[0] && dadosJug1[1] > dadosJug2[1]){
-                cout << "\t\n COMIENZA " << nombresJugadores[0]<< ". ";
+                cout << "\t\n SUMA DE LAS DOS CARAS IGUAL, PERO TIENE MAYOR DADO INDIVIDUAL . COMIENZA " << nombresJugadores[0]<< ". ";
                 cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
                 getch();
                 Beep(500, 100);
                 empiezaJugador = true;
                 return true;
             }else if(dadosJug2[0] > dadosJug1[0] && dadosJug2[0] > dadosJug1[1]){
-                cout << "\t\n COMIENZA " << nombresJugadores[1]<< ". ";
+                cout << "\t\n SUMA DE LAS DOS CARAS IGUAL, PERO TIENE MAYOR DADO INDIVIDUAL . COMIENZA " << nombresJugadores[1]<< ". ";
                 cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
                 getch();
                 Beep(500, 100);
                 empiezaJugador = true;
                 return false;
             }else if(dadosJug2[1] > dadosJug1[0] && dadosJug2[1] > dadosJug1[1]){
-                cout << "\t\n COMIENZA " << nombresJugadores[1]<< ". ";
+                cout << "\t\n SUMA DE LAS DOS CARAS IGUAL, PERO TIENE MAYOR DADO INDIVIDUAL . COMIENZA " << nombresJugadores[1]<< ". ";
                 cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
                 getch();
                 Beep(500, 100);
@@ -232,7 +235,7 @@ bool empiezaJugador(string nombresJugadores[]){
     }
 }
 
-void rondas(string nombresJugadores[], string &nombre, string &nombre2, int &puntaje){
+void rondas(string nombresJugadores[], string &nombreGanador, string &nombreGanador2, int &puntaje){
     int i, trufasTotales[2] = {}, contadorRondas = 0, maxLanzamiento1 = 0, maxLanzamiento2 = 0, contadorOinks1 = 0, contadorOinks2 = 0;
     bool banderaTresDados = 0, cayoBarro = 0, empieza = 0;
     char continuar;
@@ -649,11 +652,11 @@ void rondas(string nombresJugadores[], string &nombre, string &nombre2, int &pun
             empieza = true;
         }
     }
-    mostrarGanador(nombresJugadores, trufasTotales, contadorOinks1, contadorOinks2, maxLanzamiento1, maxLanzamiento2, nombre, nombre2,puntaje);
+    mostrarGanador(nombresJugadores, trufasTotales, contadorOinks1, contadorOinks2, maxLanzamiento1, maxLanzamiento2, nombreGanador, nombreGanador2,puntaje);
 }
 
 void mostrarGanador(string nombresJugadores[],int trufasTotales[], int contadorOinks1, int contadorOinks2, int maxLanzamiento1,
-                   int maxLanzamiento2, string &nombre, string &nombre2, int &puntaje){
+                   int maxLanzamiento2, string &nombreGanador, string &nombreGanador2, int &puntaje){
     limpiarConsola();
     int mayorLanzador, contador1 = 0, contador2 = 0, PDV1 = 0, PDV2 = 0;
     int trufas1 = trufasTotales[0], trufas2 = trufasTotales[1];
@@ -705,18 +708,18 @@ void mostrarGanador(string nombresJugadores[],int trufasTotales[], int contadorO
     cout << endl << endl;
     if(PDV1 > PDV2){
         cout << "\t\t\n ¡GANADOR DEL JUEGO: " << nombresJugadores[0] << " CON " << PDV1 << " PUNTOS!. ";
-        nombre = nombresJugadores[0];
-        nombre2 = nombresJugadores[0];
+        nombreGanador = nombresJugadores[0];
+        nombreGanador2 = nombresJugadores[0];
         puntaje = PDV1;
     }else if(PDV2 > PDV1){
         cout << "\t\t\n ¡GANADOR DEL JUEGO: " << nombresJugadores[1] << " CON " << PDV2 << " PUNTOS!. ";
-        nombre = nombresJugadores[1];
-        nombre2 = nombresJugadores[1];
+        nombreGanador = nombresJugadores[1];
+        nombreGanador2 = nombresJugadores[1];
         puntaje = PDV2;
     }else{
         cout << "\t\t\n ¡EMPATARON EL JUEGO!. ";
-        nombre = nombresJugadores[0];
-        nombre2 = nombresJugadores[1];
+        nombreGanador = nombresJugadores[0];
+        nombreGanador2 = nombresJugadores[1];
         puntaje = PDV2;
     }
 

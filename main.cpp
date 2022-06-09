@@ -13,27 +13,18 @@ using namespace std;
 int main(){
     system("color 5F");
     setlocale(LC_ALL, "");
-    int puntajeGanadores[10] = {}, opcion, puntaje;
-    string nombresGanadores[10], nombreEmpate[10], nombre, nombre2;
+    int opcion, puntaje = 0, puntajeMaximo = 0;
+    string  nombreGanador, nombreGanador2;
     menuInicio(opcion);
     while(opcion >= 0 || opcion <= 3){
-        bool jugaron = true;
         if(opcion == 1){
             limpiarConsola();
-            iniciarJuego(nombre, nombre2,puntaje);
-            for(int i  = 0; i < 10; i++){
-                if(puntajeGanadores[i] == 0 && jugaron){
-                    puntajeGanadores[i] = puntaje;
-                    nombresGanadores[i] = nombre;
-                    nombreEmpate[i] = nombre2;
-                    jugaron = false;
-                }
-            }
+            iniciarJuego(nombreGanador, nombreGanador2,puntaje);
             volverMenu();
         }
         else if(opcion == 2){
             limpiarConsola();
-            mostrarEstadisticas(puntajeGanadores, nombresGanadores, nombreEmpate);
+            mostrarEstadisticas(nombreGanador, nombreGanador2,puntaje, puntajeMaximo);
             volverMenu();
         }
         else if(opcion == 3){

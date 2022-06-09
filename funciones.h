@@ -14,15 +14,15 @@
 #include <conio.h>
 
 using namespace std;
-void iniciarJuego(string &nombre, string &nombre2, int &puntaje);
+void iniciarJuego(string &nombreGanador, string &nombreGanador2,int &puntaje);
 void volverMenu();
-void mostrarEstadisticas(int puntajeGanadores[], string nombresGanadores[], string nombreEmpate[]);
+void mostrarEstadisticas(string &nombreGanador, string &nombreGanador2, int &puntaje, int &puntajeMaximo);
 void mostrarGanador(string nombresJugadores[], int trufasTotales[], int contadorOinks1, int contadorOinks2, int maxLanzamiento1,
-                   int maxLanzamiento2, string &nombre, string &nombre2, int &puntaje);
+                   int maxLanzamiento2, string &nombreGanador, string &nombreGanador2,int &puntaje);
 void menuInicio(int &opcion);
 void reglas();
 bool confirmacionSalir();
-void rondas(string nombresJugadores[], string &nombre, string &nombre2, int &puntaje);
+void rondas(string nombresJugadores[], string &nombreGanador, string &nombreGanador2,int &puntaje);
 bool empiezaJugador(string nombresJugadores[]);
 bool validarOpcion(char opcion);
 int tirarDados();
