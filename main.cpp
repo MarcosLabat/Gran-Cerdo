@@ -13,6 +13,10 @@ using namespace std;
 int main(){
     system("color 5F");
     setlocale(LC_ALL, "");
+    Beep(250, 100);
+    Beep(300, 100);
+    Beep(400, 100);
+    Beep(500, 100);
     int opcion, puntaje = 0, puntajeMaximo = 0;
     string  nombreGanador, nombreGanador2;
     menuInicio(opcion);
@@ -43,10 +47,11 @@ int main(){
             bool r;
             r = confirmacionSalir();
             if(r){
+                limpiarConsola();
+                cout << "\t\n HASTA LUEGO";
                 Beep(500, 150);
                 Beep(400, 150);
                 Beep(300, 150);
-                cout << "\t\n HASTA LUEGO";
                 Beep(200, 150);
                 Beep(100, 150);
                 return 0;

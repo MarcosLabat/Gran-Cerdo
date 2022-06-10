@@ -98,14 +98,14 @@ void mostrarEstadisticas(string &nombreGanador, string &nombreGanador2, int &pun
         if(puntaje > puntajeMaximo){
             puntajeMaximo = puntaje;
             cout << "\t\n --------------------------------------------------------------------------------------------------------";
-            cout << "\t\n EL JUGADOR CON MAYOR CANTIDAD DE PUNTOS ES " << nombreGanador << " CON LA CANTIDAD DE " << puntaje << " PDV";
+            cout << "\t\n EL JUGADOR CON MAYOR CANTIDAD DE PUNTOS ES " << nombreGanador << " CON " << puntaje << " PDV";
             cout << "\t\n --------------------------------------------------------------------------------------------------------";
         }
     }else{
        if(puntaje > puntajeMaximo){
             puntajeMaximo = puntaje;
             cout << "\t\n ---------------------------------------------------------------------------------------------------------------------------------";
-            cout << "\t\n LOS JUGADORES CON MAYOR CANTIDAD DE PUNTOS SON " << nombreGanador << " Y " << nombreGanador2 << " CON LA CANTIDAD DE " << puntaje << " PDV";
+            cout << "\t\n LOS JUGADORES CON MAYOR CANTIDAD DE PUNTOS SON " << nombreGanador << " Y " << nombreGanador2 << " CON " << puntaje << " PDV";
             cout << "\t\n ----------------------------------------------------------------------------------------------------------------------------------";
         }
     }
@@ -182,51 +182,51 @@ bool empiezaJugador(string nombresJugadores[]){
         dadosConseguido1 = dadosJug1[0] + dadosJug1[1];
         dadosConseguido2 = dadosJug2[0] + dadosJug2[1];
         if(dadosConseguido1 > dadosConseguido2){
-            cout << "\t\n SUMANDO LAS DOS CARAS, SACO MAYOR CANTIDAD. COMINEZA " << nombresJugadores[0] << ".";
-            cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+            cout << "\t\n SUMANDO LAS DOS CARAS, SACO MAYOR RESULTADO. COMINEZA " << nombresJugadores[0];
+            cout << "\t\n\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
             getch();
             Beep(500, 100);
             empiezaJugador = true;
             return true;
         }else if(dadosConseguido2 > dadosConseguido1){
-            cout << "\t\n SUMANDO LAS DOS CARAS, SACO MAYOR CANTIDAD. COMINEZA " << nombresJugadores[1] << ". ";
-            cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+            cout << "\t\n SUMANDO LAS DOS CARAS, SACO MAYOR RESULTADO. COMINEZA " << nombresJugadores[1];
+            cout << "\t\n\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
             getch();
             Beep(500, 100);
             empiezaJugador = true;
             return false;
         }else{
             if(dadosJug1[0] > dadosJug2[0] && dadosJug1[0] > dadosJug2[1]){
-                cout << "\t\n SUMA DE LAS DOS CARAS IGUAL, PERO TIENE MAYOR DADO INDIVIDUAL . COMIENZA " << nombresJugadores[0] << ". ";
-                cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+                cout << "\t\n SUMA DE LAS DOS CARAS IGUAL, PERO TIENE MAYOR DADO INDIVIDUAL. COMIENZA " << nombresJugadores[0];
+                cout << "\t\n\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
                 getch();
                 Beep(500, 100);
                 empiezaJugador = true;
                 return true;
             }else if(dadosJug1[1] > dadosJug2[0] && dadosJug1[1] > dadosJug2[1]){
-                cout << "\t\n SUMA DE LAS DOS CARAS IGUAL, PERO TIENE MAYOR DADO INDIVIDUAL . COMIENZA " << nombresJugadores[0]<< ". ";
-                cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+                cout << "\t\n SUMA DE LAS DOS CARAS IGUAL, PERO TIENE MAYOR DADO INDIVIDUAL. COMIENZA " << nombresJugadores[0];
+                cout << "\t\n\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
                 getch();
                 Beep(500, 100);
                 empiezaJugador = true;
                 return true;
             }else if(dadosJug2[0] > dadosJug1[0] && dadosJug2[0] > dadosJug1[1]){
-                cout << "\t\n SUMA DE LAS DOS CARAS IGUAL, PERO TIENE MAYOR DADO INDIVIDUAL . COMIENZA " << nombresJugadores[1]<< ". ";
-                cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+                cout << "\t\n SUMA DE LAS DOS CARAS IGUAL, PERO TIENE MAYOR DADO INDIVIDUAL. COMIENZA " << nombresJugadores[1];
+                cout << "\t\n\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
                 getch();
                 Beep(500, 100);
                 empiezaJugador = true;
                 return false;
             }else if(dadosJug2[1] > dadosJug1[0] && dadosJug2[1] > dadosJug1[1]){
-                cout << "\t\n SUMA DE LAS DOS CARAS IGUAL, PERO TIENE MAYOR DADO INDIVIDUAL . COMIENZA " << nombresJugadores[1]<< ". ";
-                cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+                cout << "\t\n SUMA DE LAS DOS CARAS IGUAL, PERO TIENE MAYOR DADO INDIVIDUAL. COMIENZA " << nombresJugadores[1];
+                cout << "\t\n\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
                 getch();
                 Beep(500, 100);
                 empiezaJugador = true;
                 return false;
             }else{
-                cout << "\t\n EMPATE, SE VUELVE A TIRAR. ";
-                cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+                cout << "\t\n EMPATE, SE VUELVE A TIRAR.";
+                cout << "\t\n\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
                 getch();
                 Beep(500, 100);
                 empiezaJugador = false;
