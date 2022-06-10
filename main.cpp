@@ -17,18 +17,17 @@ int main(){
     Beep(300, 100);
     Beep(400, 100);
     Beep(500, 100);
-    int opcion, puntaje = 0, puntajeMaximo = 0;
-    string  nombreGanador, nombreGanador2;
+    int opcion, puntaje = 0, puntajeMaximo = 0, puntajeAnterior;
+    string  nombreGanador, nombreGanador2, anteriorGanador, anteriorGanador2;
     menuInicio(opcion);
     while(opcion >= 0 || opcion <= 3){
         if(opcion == 1){
             limpiarConsola();
             iniciarJuego(nombreGanador, nombreGanador2,puntaje);
-            volverMenu();
         }
         else if(opcion == 2){
             limpiarConsola();
-            mostrarEstadisticas(nombreGanador, nombreGanador2,puntaje, puntajeMaximo);
+            mostrarEstadisticas(nombreGanador, nombreGanador2, anteriorGanador, anteriorGanador2, puntaje, puntajeMaximo, puntajeAnterior);
             volverMenu();
         }
         else if(opcion == 3){

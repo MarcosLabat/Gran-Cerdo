@@ -88,7 +88,7 @@ void volverMenu(){
 }
 
 //MOSTRAR ESTADISTICAS
-void mostrarEstadisticas(string &nombreGanador, string &nombreGanador2, int &puntaje, int &puntajeMaximo){
+void mostrarEstadisticas(string &nombreGanador, string &nombreGanador2, string &anteriorGanador, string &anteriorGanador2, int &puntaje, int &puntajeMaximo, int &puntajeAnterior){
     limpiarConsola();
     if(puntaje == 0){
         cout << "\t\n ---------------------------------------------";
@@ -97,16 +97,37 @@ void mostrarEstadisticas(string &nombreGanador, string &nombreGanador2, int &pun
     }else if(nombreGanador == nombreGanador2){
         if(puntaje > puntajeMaximo){
             puntajeMaximo = puntaje;
+            anteriorGanador = nombreGanador;
+            puntajeAnterior = puntaje;
             cout << "\t\n --------------------------------------------------------------------------------------------------------";
             cout << "\t\n EL JUGADOR CON MAYOR CANTIDAD DE PUNTOS ES " << nombreGanador << " CON " << puntaje << " PDV";
+            cout << "\t\n --------------------------------------------------------------------------------------------------------";
+        }else if(puntaje < puntajeMaximo){
+            cout << "\t\n --------------------------------------------------------------------------------------------------------";
+            cout << "\t\n EL JUGADOR CON MAYOR CANTIDAD DE PUNTOS ES " << anteriorGanador << " CON " << puntajeAnterior << " PDV";
+            cout << "\t\n --------------------------------------------------------------------------------------------------------";
+        }else{
+            cout << "\t\n --------------------------------------------------------------------------------------------------------";
+            cout << "\t\n LOS JUGADORES CON MAYOR CANTIDAD DE PUNTOS SON " << anteriorGanador << " Y " << nombreGanador << " CON " << puntajeAnterior << " PDV";
             cout << "\t\n --------------------------------------------------------------------------------------------------------";
         }
     }else{
        if(puntaje > puntajeMaximo){
             puntajeMaximo = puntaje;
+            anteriorGanador = nombreGanador;
+            anteriorGanador2 = nombreGanador2;
+            puntajeAnterior = puntaje;
             cout << "\t\n ---------------------------------------------------------------------------------------------------------------------------------";
             cout << "\t\n LOS JUGADORES CON MAYOR CANTIDAD DE PUNTOS SON " << nombreGanador << " Y " << nombreGanador2 << " CON " << puntaje << " PDV";
             cout << "\t\n ----------------------------------------------------------------------------------------------------------------------------------";
+        }else if(puntaje < puntajeMaximo){
+            cout << "\t\n --------------------------------------------------------------------------------------------------------";
+            cout << "\t\n LOS JUGADORES CON MAYOR CANTIDAD DE PUNTOS SON " << anteriorGanador << " Y " << anteriorGanador2 << " CON " << puntajeAnterior << " PDV";
+            cout << "\t\n --------------------------------------------------------------------------------------------------------";
+        }else{
+            cout << "\t\n --------------------------------------------------------------------------------------------------------";
+            cout << "\t\n LOS JUGADORES CON MAYOR CANTIDAD DE PUNTOS SON " << anteriorGanador << ", " << anteriorGanador2 << ", " << nombreGanador << " Y " << nombreGanador2 << " CON " << puntajeAnterior << " PDV";
+            cout << "\t\n --------------------------------------------------------------------------------------------------------";
         }
     }
 }
@@ -660,7 +681,7 @@ void mostrarGanador(string nombresJugadores[],int trufasTotales[], int contadorO
     limpiarConsola();
     int mayorLanzador, contador1 = 0, contador2 = 0, PDV1 = 0, PDV2 = 0;
     int trufas1 = trufasTotales[0], trufas2 = trufasTotales[1];
-    string nombresGanadores[10];
+    string oinkFinal;
     cout << "\t\t\n GRAN CERDO";
     cout << "\t\t\n -----------------------------------------------------------------------------------------------------------------------";
     cout << "\t\t\n HITO\t\t\t\t " << nombresJugadores[0] << " \t\t\t\t " << nombresJugadores[1];
@@ -722,7 +743,13 @@ void mostrarGanador(string nombresJugadores[],int trufasTotales[], int contadorO
         nombreGanador2 = nombresJugadores[1];
         puntaje = PDV2;
     }
+    cin.ignore();
 
+    do{
+    cout << "\t\n INGRESE OINK PARA CONTINUAR: ";
+    getline(cin, oinkFinal);
+    Beep(500, 100);
+    }while(oinkFinal != "OINK" && oinkFinal != "oink");
 }
 
 

@@ -14,9 +14,10 @@
 #include <conio.h>
 
 using namespace std;
+
 void iniciarJuego(string &nombreGanador, string &nombreGanador2,int &puntaje);
 void volverMenu();
-void mostrarEstadisticas(string &nombreGanador, string &nombreGanador2, int &puntaje, int &puntajeMaximo);
+void mostrarEstadisticas(string &nombreGanador, string &nombreGanador2, string &anteriorGanador, string &anteriorGanador2, int &puntaje, int &puntajeMaximo, int &puntajeAnterior);
 void mostrarGanador(string nombresJugadores[], int trufasTotales[], int contadorOinks1, int contadorOinks2, int maxLanzamiento1,
                    int maxLanzamiento2, string &nombreGanador, string &nombreGanador2,int &puntaje);
 void menuInicio(int &opcion);
