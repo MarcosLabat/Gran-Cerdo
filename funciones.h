@@ -19,7 +19,7 @@ void iniciarJuego(string &nombreGanador, string &nombreGanador2,int &puntaje);
 void volverMenu();
 void mostrarEstadisticas(string &nombreGanador, string &nombreGanador2, string &anteriorGanador, string &anteriorGanador2, int &puntaje, int &puntajeMaximo, int &puntajeAnterior);
 void mostrarGanador(string nombresJugadores[], int trufasTotales[], int contadorOinks1, int contadorOinks2, int maxLanzamiento1,
-                   int maxLanzamiento2, string &nombreGanador, string &nombreGanador2,int &puntaje);
+                   int maxLanzamiento2, string &nombreGanador, string &nombreGanador2,int &puntaje, int &promedioLanzamientos,int lanzamientosJug1[], int lanzamientosJug2[]);
 void menuInicio(int &opcion);
 void reglas();
 bool confirmacionSalir();

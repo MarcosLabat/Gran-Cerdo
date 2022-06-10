@@ -258,6 +258,7 @@ bool empiezaJugador(string nombresJugadores[]){
 
 void rondas(string nombresJugadores[], string &nombreGanador, string &nombreGanador2, int &puntaje){
     int i, trufasTotales[2] = {}, contadorRondas = 0, maxLanzamiento1 = 0, maxLanzamiento2 = 0, contadorOinks1 = 0, contadorOinks2 = 0;
+    int contadorLanzamientos = 0, promedioLanzamientos = 0, lanzamientosJug1[5] = {}, lanzamientosJug2[5] = {}, contador1 = 0, contador2 = 0;
     bool banderaTresDados = 0, cayoBarro = 0, empieza = 0;
     char continuar;
     empieza = empiezaJugador(nombresJugadores);
@@ -303,6 +304,7 @@ void rondas(string nombresJugadores[], string &nombreGanador, string &nombreGana
                         dados[x] = tirarDados();
                     }
                     lanzamientos++;
+                    contadorLanzamientos++;
                     if(lanzamientos > maxLanzamiento1){
                         maxLanzamiento1 = lanzamientos;
                     }
@@ -399,6 +401,7 @@ void rondas(string nombresJugadores[], string &nombreGanador, string &nombreGana
                         dados[i] = tirarDados();
                     }
                     lanzamientos++;
+                    contadorLanzamientos++;
                     if(lanzamientos > maxLanzamiento1){
                         maxLanzamiento1 = lanzamientos;
                     }
@@ -469,6 +472,7 @@ void rondas(string nombresJugadores[], string &nombreGanador, string &nombreGana
                     }
                     limpiarConsola();
                 }
+                lanzamientosJug1[contadorRondas - 1] = lanzamientos;
             }else{
                 if(!banderaTresDados){
                     cout << "\t\n\n TURNO DE " << nombresJugadores[1];
@@ -498,6 +502,7 @@ void rondas(string nombresJugadores[], string &nombreGanador, string &nombreGana
                         dados[x] = tirarDados();
                     }
                     lanzamientos++;
+                    contadorLanzamientos++;
                     if(lanzamientos > maxLanzamiento2){
                         maxLanzamiento2 = lanzamientos;
                     }
@@ -594,6 +599,7 @@ void rondas(string nombresJugadores[], string &nombreGanador, string &nombreGana
                         dados[i] = tirarDados();
                     }
                     lanzamientos++;
+                    contadorLanzamientos++;
                     if(lanzamientos > maxLanzamiento2){
                         maxLanzamiento2 = lanzamientos;
                     }
@@ -665,6 +671,7 @@ void rondas(string nombresJugadores[], string &nombreGanador, string &nombreGana
                     limpiarConsola();
 
                 }
+                lanzamientosJug2[contadorRondas - 1] = lanzamientos;
             }
         }
         if(empieza){
@@ -672,14 +679,16 @@ void rondas(string nombresJugadores[], string &nombreGanador, string &nombreGana
         }else{
             empieza = true;
         }
+
     }
-    mostrarGanador(nombresJugadores, trufasTotales, contadorOinks1, contadorOinks2, maxLanzamiento1, maxLanzamiento2, nombreGanador, nombreGanador2,puntaje);
+    promedioLanzamientos = contadorLanzamientos / 10;
+    mostrarGanador(nombresJugadores, trufasTotales, contadorOinks1, contadorOinks2, maxLanzamiento1, maxLanzamiento2, nombreGanador, nombreGanador2,puntaje, promedioLanzamientos,lanzamientosJug1, lanzamientosJug2);
 }
 
 void mostrarGanador(string nombresJugadores[],int trufasTotales[], int contadorOinks1, int contadorOinks2, int maxLanzamiento1,
-                   int maxLanzamiento2, string &nombreGanador, string &nombreGanador2, int &puntaje){
+                   int maxLanzamiento2, string &nombreGanador, string &nombreGanador2, int &puntaje, int &promedioLanzamientos, int lanzamientosJug1[], int lanzamientosJug2[]){
     limpiarConsola();
-    int mayorLanzador, contador1 = 0, contador2 = 0, PDV1 = 0, PDV2 = 0;
+    int mayorLanzador, contador1 = 0, contador2 = 0, PDV1 = 0, PDV2 = 0, superarPromedio1 = 0, superarPromedio2 = 0;
     int trufas1 = trufasTotales[0], trufas2 = trufasTotales[1];
     string oinkFinal;
     cout << "\t\t\n GRAN CERDO";
@@ -724,6 +733,19 @@ void mostrarGanador(string nombresJugadores[],int trufasTotales[], int contadorO
         PDV1 += 3;
         PDV2 += 3;
     }
+    for(int i = 0; i < 5; i++){
+        if(lanzamientosJug1[i] > promedioLanzamientos){
+            superarPromedio1++;
+        }
+    }
+    for(int i = 0; i < 5; i++){
+        if(lanzamientosJug2[i] > promedioLanzamientos){
+            superarPromedio2++;
+        }
+    }
+    cout << "\t\n BONUS EXAMEN\t\t " << superarPromedio1 << " PDV (" << superarPromedio1 << " LANZAMIENTOS)\t\t\t" << superarPromedio2 << " PDV (" << superarPromedio2 << " LANZAMIENTOS)";
+    PDV1 += superarPromedio1;
+    PDV2 += superarPromedio2;
     cout << "\t\t\n -----------------------------------------------------------------------------------------------------------------------";
     cout << "\t\t\n TOTAL \t\t\t\t" << PDV1 << " PDV \t\t\t\t\t" << PDV2 << " PDV";
     cout << endl << endl;
