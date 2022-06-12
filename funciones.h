@@ -25,6 +25,12 @@ void reglas();
 bool confirmacionSalir();
 void rondas(string nombresJugadores[], string &nombreGanador, string &nombreGanador2,int &puntaje);
 bool empiezaJugador(string nombresJugadores[]);
+void tirarDosDados(string nombresJugadores[], int trufasTotales[], int &contadorRondas, int &contadorTrufas1, int &contadorTrufas2 ,int &lanzamientos,
+                   int &maxLanzamiento1, int &maxLanzamiento2,int &trufas,int &pasarDeRonda, int &contadorOinks1, int &contadorOinks2, bool &cayoBarro,
+                   bool &banderaTirar, bool &empieza, int &contadorLanzamientos, bool &banderaTresDados);
+void tirarTresDados(string nombresJugadores[], int trufasTotales[], int &contadorRondas, int &contadorTrufas1, int &contadorTrufas2 ,int &lanzamientos,
+                   int &maxLanzamiento1, int &maxLanzamiento2,int &trufas,int &pasarDeRonda, int &contadorOinks1, int &contadorOinks2, bool &banderaTirar,
+                   bool &empieza, int &contadorLanzamientos);
 bool validarOpcion(char opcion);
 int tirarDados();
 void dibujarDados(int a);

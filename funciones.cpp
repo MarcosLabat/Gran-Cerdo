@@ -258,9 +258,8 @@ bool empiezaJugador(string nombresJugadores[]){
 
 void rondas(string nombresJugadores[], string &nombreGanador, string &nombreGanador2, int &puntaje){
     int i, trufasTotales[2] = {}, contadorRondas = 0, maxLanzamiento1 = 0, maxLanzamiento2 = 0, contadorOinks1 = 0, contadorOinks2 = 0;
-    int contadorLanzamientos = 0, promedioLanzamientos = 0, lanzamientosJug1[5] = {}, lanzamientosJug2[5] = {}, contador1 = 0, contador2 = 0;
+    int contadorLanzamientos = 0, promedioLanzamientos = 0, lanzamientosJug1[5] = {}, lanzamientosJug2[5] = {};
     bool banderaTresDados = 0, cayoBarro = 0, empieza = 0;
-    char continuar;
     empieza = empiezaJugador(nombresJugadores);
     limpiarConsola();
     for(i = 0; i < 10; i++){
@@ -276,404 +275,38 @@ void rondas(string nombresJugadores[], string &nombreGanador, string &nombreGana
             cout << "\t\n " << nombresJugadores[0] << ": " << trufasTotales[0] << " trufas acumuladas \t "
             << nombresJugadores[1] << ": " << trufasTotales[1] << " trufas acumuladas";
             if(empieza){
+
                 if(!banderaTresDados){
-                    cout << "\t\n\n TURNO DE " << nombresJugadores[0];
-                    cout << "\t\n +------------------------------+";
-                    cout << "\t\n | RONDA #" << contadorRondas <<"\t\t\t|";
-                    if(contadorTrufas1 < 10){
-                        cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas1 <<"\t\t|";
 
-                    }else{
-                        cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas1 <<"\t|";
-                    }
-                    cout << "\t\n | LANZAMIENTOS:" << lanzamientos <<"\t\t|";
-                    cout << "\t\n +------------------------------+";
-                    char tirar;
-                    cout << "\t\n " << nombresJugadores[0] << " PRESIONE (T) PARA TIRAR LOS DADOS: ";
-                    cin >> tirar;
-                    tirar = toupper(tirar);
-                    Beep(500, 100);
-                    while(tirar != 'T'){
-                        cout << "\t\n TECLA INCORRECTA, INGRESE LA (T) POR FAVOR: ";
-                        cin >> tirar;
-                        tirar = toupper(tirar);
-                        Beep(500, 100);
-                    }
-                    int dados[2] = {}, x;
-                    for(x = 0; x < 2; x++){
-                        dados[x] = tirarDados();
-                    }
-                    lanzamientos++;
-                    contadorLanzamientos++;
-                    if(lanzamientos > maxLanzamiento1){
-                        maxLanzamiento1 = lanzamientos;
-                    }
-                    cout << "\t\n LANZAMIENTO #" << lanzamientos << endl;
-                    dibujarDados(dados[0]);
-                    dibujarDados(dados[1]);
-                    if(dados[0] != dados[1] && dados[0] != 1 && dados[1] != 1){
-                        cout << "\t\n SUMAS TUS TRUFAS";
-                        trufas = dados[0] + dados[1];
-                        contadorTrufas1 += trufas;
-                        trufasTotales[0] += trufas;
-                    }else if( (dados[0] != dados[1]) && (dados[0] == 1 || dados[1] == 1) ){
-                        cout << "\t\n PERDISTE LAS TRUFAS DE LA RONDA ACTUAL";
-                        trufasTotales[0] -= contadorTrufas1;
-                        contadorTrufas1 = 0;
-                        pasarDeRonda = 1;
-                    }else if(dados[0] != 1 && dados[1] != 1){
-                        cout << "\t\n MULTIPLICAS TUS TRUFAS, HICISTE UN OINK";
-                        trufas = (dados[0] + dados[1]) * 2;
-                        contadorTrufas1 += trufas;
-                        trufasTotales[0] += trufas;
-                        contadorOinks1++;
-                        pasarDeRonda = 2;
-                    }else if(dados[0] == 1){
-                        cout << "\t\n TE HUNDISTE EN EL BARRO, PERDES TODAS TUS TRUFAS";
-                        trufasTotales[0] = 0;
-                        pasarDeRonda = 1;
-                        cayoBarro = 1;
-                    }
-                    cout << "\t\n ¡SUMASTE " << trufas << " TRUFAS!";
-                    if(pasarDeRonda == 0){
-                        cout << "\t\n ¿CONTINUAR?(S/N): ";
-                        cin >> continuar;
-                        continuar = toupper(continuar);
-                        Beep(500, 100);
-                        while(continuar != 'S' && continuar != 'N'){
-                            cout << "\t\n TECLA INCORRECTA, ¿CONTINUAR?(S/N): ";
-                            cin >> continuar;
-                            continuar = toupper(continuar);
-                            Beep(500, 100);
-                        }
-                        if(continuar == 'N'){
-                            banderaTirar = 0;
-                        }
+                      tirarDosDados(nombresJugadores, trufasTotales, contadorRondas, contadorTrufas1, contadorTrufas2 , lanzamientos, maxLanzamiento1, maxLanzamiento2, trufas,
+                      pasarDeRonda, contadorOinks1, contadorOinks2, cayoBarro, banderaTirar, empieza, contadorLanzamientos, banderaTresDados);
 
-                    }else if(pasarDeRonda == 1){
-                        cout << "\t\n PERDISTE TU TURNO.";
-                        cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
-                        getch();
-                        Beep(500, 100);
-                        banderaTirar = 0;
-                    }else{
-                        cout << "\t\n ESTAS OBLIGADO A TIRAR DE NUEVO.";
-                        cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
-                        getch();
-                        Beep(500, 100);
-                        banderaTirar = 1;
-                    }
-                    //VERIFICAR SI YA SE TIENE QUE JUGAR CON TRES DADOS
-                    if((trufasTotales[0] >= 50 && trufasTotales[1] >= 50) || cayoBarro){
-                        limpiarConsola();
-                        banderaTresDados = 1;
-                        cout << "\t\n A PARTIR DE AHORA SE JUEGA CON TRES DADOS";
-                        cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
-                        getch();
-                    }
-                    limpiarConsola();
-                //ELSE DE LA PREGUNTA SI BANDERATRESDADOS ES TRUE
                 }else{
-                    cout << "\t\n\n TURNO DE " << nombresJugadores[0];
-                    cout << "\t\n +------------------------------+";
-                    cout << "\t\n | RONDA #" << contadorRondas <<"\t\t\t|";
-                    if(contadorTrufas1 < 10){
-                        cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas1 <<"\t\t|";
 
-                    }else{
-                        cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas1 <<"\t|";
-                    }
-                    cout << "\t\n | LANZAMIENTOS:" << lanzamientos <<"\t\t|";
-                    cout << "\t\n +------------------------------+";
-                    char tirar;
-                    cout << "\t\n " << nombresJugadores[0] << " PRESIONE (T) PARA TIRAR LOS DADOS: ";
-                    cin >> tirar;
-                    tirar = toupper(tirar);
-                    Beep(500, 100);
-                    while(tirar != 'T'){
-                        cout << "\t\n TECLA INCORRECTA, INGRESE LA (T) POR FAVOR: ";
-                        cin >> tirar;
-                        tirar = toupper(tirar);
-                        Beep(500, 100);
-                    }
-                    int dados[3], i;
-                    for(i = 0; i < 3; i++){
-                        dados[i] = tirarDados();
-                    }
-                    lanzamientos++;
-                    contadorLanzamientos++;
-                    if(lanzamientos > maxLanzamiento1){
-                        maxLanzamiento1 = lanzamientos;
-                    }
-                    cout << "\t\n LANZAMIENTO #" << lanzamientos << endl;
-                    for(i = 0; i < 3; i++){
-                        dibujarDados(dados[i]);
-                    }
-                    if((dados[0] == dados[1] && dados[1] == dados[2]) && dados[0] != 1){
-                        cout << "\t\n MULTIPLICAS TUS TRUFAS, HICISTE UN OINK";
-                        for(int i = 0; i < 3; i++){
-                            trufas += dados[i];
-                        }
-                        trufas *= 2;
-                        contadorTrufas1 += trufas;
-                        trufasTotales[0] += trufas;
-                        contadorOinks1++;
-                        pasarDeRonda = 2;
-                    }else if( (dados[0] == dados[1] && dados[1] == dados[2]) && dados[0] == 1){
-                        cout << "\t\n PERDISTE TUS TRUFAS Y SE LAS CEDES AL OTRO";
-                        trufasTotales[1] += trufasTotales[0];
-                        trufasTotales[0] = 0;
-                        pasarDeRonda = 1;
-                    }else if( (dados[0] == dados[1] && dados[0] == 1) || (dados[1] == dados[2] && dados[1] == 1) || (dados[0] == dados[2] && dados[0] == 1) ){
-                        cout << "\t\n TE HUNDISTE EN EL BARRO, PERDES TODAS TUS TRUFAS";
-                        trufasTotales[0] = 0;
-                        pasarDeRonda = 1;
-                    }else if( dados[0] != 1 && dados[1] != 1 && dados[2] != 1 ){
-                        cout << "\t\n SUMAS TUS TRUFAS";
-                        for(int i = 0; i < 3; i++){
-                            trufas += dados[i];
-                        }
-                        contadorTrufas1 += trufas;
-                        trufasTotales[0] += trufas;
-                    }else if( dados[0] == 1 || dados[1] == 1 || dados[2] == 1 ){
-                        cout << "\t\n PERDISTE LAS TRUFAS DE LA RONDA ACTUAL";
-                        trufasTotales[0] -= contadorTrufas1;
-                        contadorTrufas1 = 0;
-                        pasarDeRonda = 1;
-                    }
-                    cout << "\t\n ¡SUMASTE " << trufas << " TRUFAS!";
-                    if(pasarDeRonda == 0){
-                        cout << "\t\n ¿CONTINUAR?(S/N): ";
-                        cin >> continuar;
-                        continuar = toupper(continuar);
-                        Beep(500, 100);
-                        while(continuar != 'S' && continuar != 'N'){
-                            cout << "\t\n TECLA INCORRECTA, ¿CONTINUAR?(S/N): ";
-                            cin >> continuar;
-                            continuar = toupper(continuar);
-                            Beep(500, 100);
-                        }
-                        if(continuar == 'N'){
-                            banderaTirar = 0;
-                        }
+                    tirarTresDados(nombresJugadores, trufasTotales, contadorRondas, contadorTrufas1, contadorTrufas2 , lanzamientos, maxLanzamiento1, maxLanzamiento2, trufas,
+                      pasarDeRonda, contadorOinks1, contadorOinks2, banderaTirar, empieza, contadorLanzamientos);
 
-                    }else if(pasarDeRonda == 1){
-                        cout << "\t\n PERDISTE TU TURNO.";
-                        cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
-                        getch();
-                        Beep(500, 100);
-                        banderaTirar = 0;
-                    }else{
-                        cout << "\t\n ESTAS OBLIGADO A TIRAR DE NUEVO ";
-                        cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
-                        getch();
-                        Beep(500, 100);
-                        banderaTirar = 1;
-                    }
-                    limpiarConsola();
                 }
+
                 lanzamientosJug1[contadorRondas - 1] = lanzamientos;
+
             }else{
                 if(!banderaTresDados){
-                    cout << "\t\n\n TURNO DE " << nombresJugadores[1];
-                    cout << "\t\n +------------------------------+";
-                    cout << "\t\n | RONDA #" << contadorRondas <<"\t\t\t|";
-                    if(contadorTrufas2 < 10){
-                        cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas2 <<"\t\t|";
 
-                    }else{
-                        cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas2 <<"\t|";
-                    }
-                    cout << "\t\n | LANZAMIENTOS:" << lanzamientos <<"\t\t|";
-                    cout << "\t\n +------------------------------+";
-                    char tirar;
-                    cout << "\t\n " << nombresJugadores[1] << " PRESIONE (T) PARA TIRAR LOS DADOS: ";
-                    cin >> tirar;
-                    tirar = toupper(tirar);
-                    Beep(500, 100);
-                    while(tirar != 'T'){
-                        cout << "\t\n TECLA INCORRECTA, INGRESE LA (T) POR FAVOR: ";
-                        tirar = toupper(tirar);
-                        cin >> tirar;
-                        Beep(500, 100);
-                    }
-                    int dados[2] = {}, x;
-                    for(x = 0; x < 2; x++){
-                        dados[x] = tirarDados();
-                    }
-                    lanzamientos++;
-                    contadorLanzamientos++;
-                    if(lanzamientos > maxLanzamiento2){
-                        maxLanzamiento2 = lanzamientos;
-                    }
-                    cout << "\t\n LANZAMIENTO #" << lanzamientos << endl;
-                    dibujarDados(dados[0]);
-                    dibujarDados(dados[1]);
-                    if(dados[0] != dados[1] && dados[0] != 1 && dados[1] != 1){
-                        cout << "\t\n SUMAS TUS TRUFAS";
-                        trufas = dados[0] + dados[1];
-                        contadorTrufas2 += trufas;
-                        trufasTotales[1] += trufas;
-                    }else if((dados[0] != dados[1]) && (dados[0] == 1 || dados[1] == 1) ){
-                        cout << "\t\n PERDISTE LAS TRUFAS DE LA RONDA ACTUAL";
-                        trufasTotales[1] -= contadorTrufas2;
-                        contadorTrufas2 = 0;
-                        pasarDeRonda = 1;
-                    }
-                    else if(dados[0] != 1 && dados[1] != 1){
-                        cout << "\t\n MULTIPLICAS TUS TRUFAS, HICISTE UN OINK";
-                        trufas = (dados[0] + dados[1]) * 2;
-                        contadorTrufas2 += trufas;
-                        trufasTotales[1] += trufas;
-                        contadorOinks2++;
-                        pasarDeRonda = 2;
-                    }else if(dados[0] == 1){
-                        cout << "\t\n TE HUNDISTE EN EL BARRO, PERDES TODAS TUS TRUFAS";
-                        trufasTotales[1] = 0;
-                        pasarDeRonda = 1;
-                        cayoBarro = 1;
-                    }
-                    cout << "\t\n ¡SUMASTE " << trufas << " TRUFAS!";
-                    if(pasarDeRonda == 0){
-                        cout << "\t\n ¿CONTINUAR?(S/N): ";
-                        cin >> continuar;
-                        continuar = toupper(continuar);
-                        Beep(500, 100);
-                        while(continuar != 'S' && continuar != 'N'){
-                            cout << "\t\n TECLA INCORRECTA, ¿CONTINUAR?(S/N): ";
-                            cin >> continuar;
-                            continuar = toupper(continuar);
-                            Beep(500, 100);
-                        }
-                        if(continuar == 'N'){
-                            banderaTirar = 0;
-                        }
-                    }else if(pasarDeRonda == 1){
-                        cout << "\t\n PERDISTE TU TURNO,  ";
-                        cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
-                        getch();
-                        Beep(500, 100);
-                        banderaTirar = 0;
-                    }else{
-                        cout << "\t\n ESTAS OBLIGADO A TIRAR DE NUEVO ";
-                        cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
-                        getch();
-                        Beep(500, 100);
-                        banderaTirar = 1;
-                    }
-                    //VERIFICAR SI YA SE TIENE QUE JUGAR CON TRES DADOS
-                    if((trufasTotales[0] >= 50 && trufasTotales[1] >= 50) || cayoBarro){
-                        limpiarConsola();
-                        banderaTresDados = 1;
-                        cout << "\t\n A PARTIR DE AHORA SE JUEGA CON TRES DADOS";
-                        cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
-                        getch();
-                    }
-                    limpiarConsola();
-                //ELSE DE LA PREGUNTA SI BANDERATRESDADOS ES TRUE
+                    tirarDosDados(nombresJugadores, trufasTotales, contadorRondas, contadorTrufas1, contadorTrufas2 , lanzamientos, maxLanzamiento1, maxLanzamiento2, trufas,
+                      pasarDeRonda, contadorOinks1, contadorOinks2, cayoBarro, banderaTirar, empieza, contadorLanzamientos, banderaTresDados);
+
                 }else{
-                    cout << "\t\n\n TURNO DE " << nombresJugadores[1];
-                    cout << "\t\n +------------------------------+";
-                    cout << "\t\n | RONDA #" << contadorRondas <<"\t\t\t|";
-                    if(contadorTrufas2 < 10){
-                        cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas2 <<"\t\t|";
 
-                    }else{
-                        cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas2 <<"\t|";
-                    }
-                    cout << "\t\n | LANZAMIENTOS:" << lanzamientos <<"\t\t|";
-                    cout << "\t\n +------------------------------+";
-                    char tirar;
-                    cout << "\t\n " << nombresJugadores[1] << " PRESIONE (T) PARA TIRAR LOS DADOS: ";
-                    cin >> tirar;
-                    tirar = toupper(tirar);
-                    Beep(500, 100);
-                    while(tirar != 'T'){
-                        cout << "\t\n TECLA INCORRECTA, INGRESE LA (T) POR FAVOR: ";
-                        cin >> tirar;
-                        tirar = toupper(tirar);
-                        Beep(500, 100);
-                    }
-                    int dados[3], i;
-                    for(i = 0; i < 3; i++){
-                        dados[i] = tirarDados();
-                    }
-                    lanzamientos++;
-                    contadorLanzamientos++;
-                    if(lanzamientos > maxLanzamiento2){
-                        maxLanzamiento2 = lanzamientos;
-                    }
-                    cout << "\t\n LANZAMIENTO #" << lanzamientos << endl;
-                    for(i = 0; i < 3; i++){
-                        dibujarDados(dados[i]);
-                    }
-                    if((dados[0] == dados[1] && dados[1] == dados[2]) && dados[0] != 1){
-                        cout << "\t\n MULTIPLICAS TUS TRUFAS, HICISTE UN OINK";
-                        for(int i = 0; i < 3; i++){
-                            trufas += dados[i];
-                        }
-                        trufas *= 2;
-                        contadorTrufas2 += trufas;
-                        trufasTotales[0] += trufas;
-                        contadorOinks2++;
-                        pasarDeRonda = 2;
-                    }else if( (dados[0] == dados[1] && dados[1] == dados[2]) && dados[0] == 1){
-                        cout << "\t\n PERDISTE TUS TRUFAS Y SE LAS CEDES AL OTRO";
-                        trufasTotales[0] += trufasTotales[1];
-                        trufasTotales[1] = 0;
-                        pasarDeRonda = 1;
-                    }else if( (dados[0] == dados[1] && dados[0] == 1) || (dados[1] == dados[2] && dados[1] == 1) || (dados[0] == dados[2] && dados[0] == 1) ){
-                        cout << "\t\n TE HUNDISTE EN EL BARRO, PERDES TODAS TUS TRUFAS";
-                        trufasTotales[1] = 0;
-                        pasarDeRonda = 1;
-                    }else if( dados[0] != 1 && dados[1] != 1 && dados[2] != 1 ){
-                        cout << "\t\n SUMAS TUS TRUFAS";
-                        for(int i = 0; i < 3; i++){
-                            trufas += dados[i];
-                        }
-                        contadorTrufas2 += trufas;
-                        trufasTotales[1] += trufas;
-                    }else if( dados[0] == 1 || dados[1] == 1 || dados[2] == 1 ){
-                        cout << "\t\n PERDISTE LAS TRUFAS DE LA RONDA ACTUAL";
-                        trufasTotales[1] -= contadorTrufas2;
-                        contadorTrufas2 = 0;
-                        pasarDeRonda = 1;
-                    }
-                    cout << "\t\n ¡SUMASTE " << trufas << " TRUFAS!";
-                    if(pasarDeRonda == 0){
-                        cout << "\t\n ¿CONTINUAR?(S/N): ";
-                        cin >> continuar;
-                        continuar = toupper(continuar);
-                        Beep(500, 100);
-                        while(continuar != 'S' && continuar != 'N'){
-                            cout << "\t\n TECLA INCORRECTA, ¿CONTINUAR?(S/N): ";
-                            cin >> continuar;
-                            continuar = toupper(continuar);
-                            Beep(500, 100);
-                        }
-                        if(continuar == 'N'){
-                            banderaTirar = 0;
-                        }
-
-                    }else if(pasarDeRonda == 1){
-                        cout << "\t\n PERDISTE TU TURNO,  ";
-                        cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
-                        getch();
-                        Beep(500, 100);
-                        banderaTirar = 0;
-                    }else{
-                        cout << "\t\n ESTAS OBLIGADO A TIRAR DE NUEVO ";
-                        cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
-                        getch();
-                        Beep(500, 100);
-                        banderaTirar = 1;
-                    }
-                    limpiarConsola();
+                    tirarTresDados(nombresJugadores, trufasTotales, contadorRondas, contadorTrufas1, contadorTrufas2 , lanzamientos, maxLanzamiento1, maxLanzamiento2, trufas,
+                      pasarDeRonda, contadorOinks1, contadorOinks2, banderaTirar, empieza, contadorLanzamientos);
 
                 }
+
                 lanzamientosJug2[contadorRondas - 1] = lanzamientos;
             }
         }
+
         if(empieza){
             empieza = false;
         }else{
@@ -684,6 +317,407 @@ void rondas(string nombresJugadores[], string &nombreGanador, string &nombreGana
     promedioLanzamientos = contadorLanzamientos / 10;
     mostrarGanador(nombresJugadores, trufasTotales, contadorOinks1, contadorOinks2, maxLanzamiento1, maxLanzamiento2, nombreGanador, nombreGanador2,puntaje, promedioLanzamientos,lanzamientosJug1, lanzamientosJug2);
 }
+
+void tirarDosDados(string nombresJugadores[], int trufasTotales[] ,int &contadorRondas, int &contadorTrufas1, int &contadorTrufas2 ,int &lanzamientos,
+                   int &maxLanzamiento1, int &maxLanzamiento2,int &trufas, int &pasarDeRonda, int &contadorOinks1, int &contadorOinks2, bool &cayoBarro,
+                   bool &banderaTirar, bool &empieza, int &contadorLanzamientos, bool &banderaTresDados){
+
+     char continuar;
+     if(empieza){
+        cout << "\t\n\n TURNO DE " << nombresJugadores[0];
+        cout << "\t\n +------------------------------+";
+        cout << "\t\n | RONDA #" << contadorRondas <<"\t\t\t|";
+        if(contadorTrufas1 < 10){
+            cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas1 <<"\t\t|";
+
+        }else{
+             cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas1 <<"\t|";
+        }
+        cout << "\t\n | LANZAMIENTOS:" << lanzamientos <<"\t\t|";
+        cout << "\t\n +------------------------------+";
+        char tirar;
+        cout << "\t\n " << nombresJugadores[0] << " PRESIONE (T) PARA TIRAR LOS DADOS: ";
+        cin >> tirar;
+        tirar = toupper(tirar);
+        Beep(500, 100);
+        while(tirar != 'T'){
+                cout << "\t\n TECLA INCORRECTA, INGRESE LA (T) POR FAVOR: ";
+                cin >> tirar;
+                tirar = toupper(tirar);
+                Beep(500, 100);
+        }
+        int dados[2] = {}, x;
+        for(x = 0; x < 2; x++){
+            dados[x] = tirarDados();
+        }
+        lanzamientos++;
+        contadorLanzamientos++;
+        if(lanzamientos > maxLanzamiento1){
+            maxLanzamiento1 = lanzamientos;
+        }
+        cout << "\t\n LANZAMIENTO #" << lanzamientos << endl;
+        dibujarDados(dados[0]);
+        dibujarDados(dados[1]);
+        if(dados[0] != dados[1] && dados[0] != 1 && dados[1] != 1){
+            cout << "\t\n SUMAS TUS TRUFAS";
+            trufas = dados[0] + dados[1];
+            contadorTrufas1 += trufas;
+            trufasTotales[0] += trufas;
+        }else if( (dados[0] != dados[1]) && (dados[0] == 1 || dados[1] == 1) ){
+            cout << "\t\n PERDISTE LAS TRUFAS DE LA RONDA ACTUAL";
+            trufasTotales[0] -= contadorTrufas1;
+            contadorTrufas1 = 0;
+            pasarDeRonda = 1;
+        }else if(dados[0] != 1 && dados[1] != 1){
+            cout << "\t\n MULTIPLICAS TUS TRUFAS, HICISTE UN OINK";
+            trufas = (dados[0] + dados[1]) * 2;
+            contadorTrufas1 += trufas;
+            trufasTotales[0] += trufas;
+            contadorOinks1++;
+            pasarDeRonda = 2;
+        }else if(dados[0] == 1){
+            cout << "\t\n TE HUNDISTE EN EL BARRO, PERDES TODAS TUS TRUFAS";
+            trufasTotales[0] = 0;
+            pasarDeRonda = 1;
+            cayoBarro = 1;
+        }
+        cout << "\t\n ¡SUMASTE " << trufas << " TRUFAS!";
+        if(pasarDeRonda == 0){
+            cout << "\t\n ¿CONTINUAR?(S/N): ";
+            cin >> continuar;
+            continuar = toupper(continuar);
+            Beep(500, 100);
+            while(continuar != 'S' && continuar != 'N'){
+                cout << "\t\n TECLA INCORRECTA, ¿CONTINUAR?(S/N): ";
+                cin >> continuar;
+                continuar = toupper(continuar);
+                Beep(500, 100);
+            }
+            if(continuar == 'N'){
+                            banderaTirar = 0;
+            }
+        }else if(pasarDeRonda == 1){
+            cout << "\t\n PERDISTE TU TURNO.";
+            cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+            getch();
+            Beep(500, 100);
+            banderaTirar = 0;
+        }else{
+            cout << "\t\n ESTAS OBLIGADO A TIRAR DE NUEVO.";
+            cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+            getch();
+            Beep(500, 100);
+            banderaTirar = 1;
+        }
+        //VERIFICAR SI YA SE TIENE QUE JUGAR CON TRES DADOS
+        if((trufasTotales[0] >= 50 && trufasTotales[1] >= 50) || cayoBarro){
+            limpiarConsola();
+            banderaTresDados = 1;
+            cout << "\t\n A PARTIR DE AHORA SE JUEGA CON TRES DADOS";
+            cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+            getch();
+        }
+        limpiarConsola();
+     }else{
+        cout << "\t\n\n TURNO DE " << nombresJugadores[1];
+        cout << "\t\n +------------------------------+";
+        cout << "\t\n | RONDA #" << contadorRondas <<"\t\t\t|";
+        if(contadorTrufas2 < 10){
+            cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas2 <<"\t\t|";
+
+        }else{
+             cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas2 <<"\t|";
+        }
+        cout << "\t\n | LANZAMIENTOS:" << lanzamientos <<"\t\t|";
+        cout << "\t\n +------------------------------+";
+        char tirar;
+        cout << "\t\n " << nombresJugadores[1] << " PRESIONE (T) PARA TIRAR LOS DADOS: ";
+        cin >> tirar;
+        tirar = toupper(tirar);
+        Beep(500, 100);
+        while(tirar != 'T'){
+                cout << "\t\n TECLA INCORRECTA, INGRESE LA (T) POR FAVOR: ";
+                cin >> tirar;
+                tirar = toupper(tirar);
+                Beep(500, 100);
+        }
+        int dados[2] = {}, x;
+        for(x = 0; x < 2; x++){
+            dados[x] = tirarDados();
+        }
+        lanzamientos++;
+        contadorLanzamientos++;
+        if(lanzamientos > maxLanzamiento2){
+            maxLanzamiento2 = lanzamientos;
+        }
+        cout << "\t\n LANZAMIENTO #" << lanzamientos << endl;
+        dibujarDados(dados[0]);
+        dibujarDados(dados[1]);
+        if(dados[0] != dados[1] && dados[0] != 1 && dados[1] != 1){
+            cout << "\t\n SUMAS TUS TRUFAS";
+            trufas = dados[0] + dados[1];
+            contadorTrufas2 += trufas;
+            trufasTotales[1] += trufas;
+        }else if( (dados[0] != dados[1]) && (dados[0] == 1 || dados[1] == 1) ){
+            cout << "\t\n PERDISTE LAS TRUFAS DE LA RONDA ACTUAL";
+            trufasTotales[1] -= contadorTrufas2;
+            contadorTrufas2 = 0;
+            pasarDeRonda = 1;
+        }else if(dados[0] != 1 && dados[1] != 1){
+            cout << "\t\n MULTIPLICAS TUS TRUFAS, HICISTE UN OINK";
+            trufas = (dados[0] + dados[1]) * 2;
+            contadorTrufas2 += trufas;
+            trufasTotales[1] += trufas;
+            contadorOinks2++;
+            pasarDeRonda = 2;
+        }else if(dados[0] == 1){
+            cout << "\t\n TE HUNDISTE EN EL BARRO, PERDES TODAS TUS TRUFAS";
+            trufasTotales[1] = 0;
+            pasarDeRonda = 1;
+            cayoBarro = 1;
+        }
+        cout << "\t\n ¡SUMASTE " << trufas << " TRUFAS!";
+        if(pasarDeRonda == 0){
+            cout << "\t\n ¿CONTINUAR?(S/N): ";
+            cin >> continuar;
+            continuar = toupper(continuar);
+            Beep(500, 100);
+            while(continuar != 'S' && continuar != 'N'){
+                cout << "\t\n TECLA INCORRECTA, ¿CONTINUAR?(S/N): ";
+                cin >> continuar;
+                continuar = toupper(continuar);
+                Beep(500, 100);
+            }
+            if(continuar == 'N'){
+                banderaTirar = 0;
+            }
+        }else if(pasarDeRonda == 1){
+            cout << "\t\n PERDISTE TU TURNO.";
+            cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+            getch();
+            Beep(500, 100);
+            banderaTirar = 0;
+        }else{
+            cout << "\t\n ESTAS OBLIGADO A TIRAR DE NUEVO.";
+            cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+            getch();
+            Beep(500, 100);
+            banderaTirar = 1;
+        }
+        //VERIFICAR SI YA SE TIENE QUE JUGAR CON TRES DADOS
+        if((trufasTotales[0] >= 50 && trufasTotales[1] >= 50) || cayoBarro){
+            limpiarConsola();
+            banderaTresDados = 1;
+            cout << "\t\n A PARTIR DE AHORA SE JUEGA CON TRES DADOS";
+            cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+            getch();
+        }
+        limpiarConsola();
+     }
+
+}
+
+void tirarTresDados(string nombresJugadores[], int trufasTotales[] ,int &contadorRondas, int &contadorTrufas1, int &contadorTrufas2 ,int &lanzamientos,
+                   int &maxLanzamiento1, int &maxLanzamiento2,int &trufas, int &pasarDeRonda, int &contadorOinks1, int &contadorOinks2, bool &banderaTirar,
+                   bool &empieza, int &contadorLanzamientos){
+    char continuar;
+    if(empieza){
+        cout << "\t\n\n TURNO DE " << nombresJugadores[0];
+        cout << "\t\n +------------------------------+";
+        cout << "\t\n | RONDA #" << contadorRondas <<"\t\t\t|";
+        if(contadorTrufas1 < 10){
+            cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas1 <<"\t\t|";
+        }else{
+            cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas1 <<"\t|";
+        }
+        cout << "\t\n | LANZAMIENTOS:" << lanzamientos <<"\t\t|";
+        cout << "\t\n +------------------------------+";
+        char tirar;
+        cout << "\t\n " << nombresJugadores[0] << " PRESIONE (T) PARA TIRAR LOS DADOS: ";
+        cin >> tirar;
+        tirar = toupper(tirar);
+        Beep(500, 100);
+        while(tirar != 'T'){
+            cout << "\t\n TECLA INCORRECTA, INGRESE LA (T) POR FAVOR: ";
+            cin >> tirar;
+            tirar = toupper(tirar);
+            Beep(500, 100);
+        }
+        int dados[3], i;
+        for(i = 0; i < 3; i++){
+            dados[i] = tirarDados();
+        }
+        lanzamientos++;
+        contadorLanzamientos++;
+        if(lanzamientos > maxLanzamiento1){
+            maxLanzamiento1 = lanzamientos;
+        }
+        cout << "\t\n LANZAMIENTO #" << lanzamientos << endl;
+        for(i = 0; i < 3; i++){
+            dibujarDados(dados[i]);
+        }
+        if((dados[0] == dados[1] && dados[1] == dados[2]) && dados[0] != 1){
+            cout << "\t\n MULTIPLICAS TUS TRUFAS, HICISTE UN OINK";
+            for(int i = 0; i < 3; i++){
+                trufas += dados[i];
+            }
+            trufas *= 2;
+            contadorTrufas1 += trufas;
+            trufasTotales[0] += trufas;
+            contadorOinks1++;
+            pasarDeRonda = 2;
+        }else if( (dados[0] == dados[1] && dados[1] == dados[2]) && dados[0] == 1){
+            cout << "\t\n PERDISTE TUS TRUFAS Y SE LAS CEDES AL OTRO";
+            trufasTotales[1] += trufasTotales[0];
+            trufasTotales[0] = 0;
+            pasarDeRonda = 1;
+        }else if( (dados[0] == dados[1] && dados[0] == 1) || (dados[1] == dados[2] && dados[1] == 1) || (dados[0] == dados[2] && dados[0] == 1) ){
+            cout << "\t\n TE HUNDISTE EN EL BARRO, PERDES TODAS TUS TRUFAS";
+            trufasTotales[0] = 0;
+            pasarDeRonda = 1;
+        }else if( dados[0] != 1 && dados[1] != 1 && dados[2] != 1 ){
+            cout << "\t\n SUMAS TUS TRUFAS";
+            for(int i = 0; i < 3; i++){
+                trufas += dados[i];
+            }
+            contadorTrufas1 += trufas;
+            trufasTotales[0] += trufas;
+        }else if( dados[0] == 1 || dados[1] == 1 || dados[2] == 1 ){
+            cout << "\t\n PERDISTE LAS TRUFAS DE LA RONDA ACTUAL";
+            trufasTotales[0] -= contadorTrufas1;
+            contadorTrufas1 = 0;
+            pasarDeRonda = 1;
+        }
+        cout << "\t\n ¡SUMASTE " << trufas << " TRUFAS!";
+        if(pasarDeRonda == 0){
+            cout << "\t\n ¿CONTINUAR?(S/N): ";
+            cin >> continuar;
+            continuar = toupper(continuar);
+            Beep(500, 100);
+            while(continuar != 'S' && continuar != 'N'){
+                cout << "\t\n TECLA INCORRECTA, ¿CONTINUAR?(S/N): ";
+                cin >> continuar;
+                continuar = toupper(continuar);
+                Beep(500, 100);
+            }
+            if(continuar == 'N'){
+                banderaTirar = 0;
+            }
+
+        }else if(pasarDeRonda == 1){
+            cout << "\t\n PERDISTE TU TURNO.";
+            cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+            getch();
+            Beep(500, 100);
+            banderaTirar = 0;
+        }else{
+            cout << "\t\n ESTAS OBLIGADO A TIRAR DE NUEVO ";
+            cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+            getch();
+            Beep(500, 100);
+            banderaTirar = 1;
+        }
+        limpiarConsola();
+    }else{
+        cout << "\t\n\n TURNO DE " << nombresJugadores[1];
+        cout << "\t\n +------------------------------+";
+        cout << "\t\n | RONDA #" << contadorRondas <<"\t\t\t|";
+        if(contadorTrufas2 < 10){
+            cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas2 <<"\t\t|";
+        }else{
+            cout << "\t\n | TRUFAS DE LA RONDA:" << contadorTrufas2 <<"\t|";
+        }
+        cout << "\t\n | LANZAMIENTOS:" << lanzamientos <<"\t\t|";
+        cout << "\t\n +------------------------------+";
+        char tirar;
+        cout << "\t\n " << nombresJugadores[1] << " PRESIONE (T) PARA TIRAR LOS DADOS: ";
+        cin >> tirar;
+        tirar = toupper(tirar);
+        Beep(500, 100);
+        while(tirar != 'T'){
+            cout << "\t\n TECLA INCORRECTA, INGRESE LA (T) POR FAVOR: ";
+            cin >> tirar;
+            tirar = toupper(tirar);
+            Beep(500, 100);
+        }
+        int dados[3], i;
+        for(i = 0; i < 3; i++){
+            dados[i] = tirarDados();
+        }
+        lanzamientos++;
+        contadorLanzamientos++;
+        if(lanzamientos > maxLanzamiento2){
+            maxLanzamiento2 = lanzamientos;
+        }
+        cout << "\t\n LANZAMIENTO #" << lanzamientos << endl;
+        for(i = 0; i < 3; i++){
+            dibujarDados(dados[i]);
+        }
+        if((dados[0] == dados[1] && dados[1] == dados[2]) && dados[0] != 1){
+            cout << "\t\n MULTIPLICAS TUS TRUFAS, HICISTE UN OINK";
+            for(int i = 0; i < 3; i++){
+                trufas += dados[i];
+            }
+            trufas *= 2;
+            contadorTrufas2 += trufas;
+            trufasTotales[1] += trufas;
+            contadorOinks2++;
+            pasarDeRonda = 2;
+        }else if( (dados[0] == dados[1] && dados[1] == dados[2]) && dados[0] == 1){
+            cout << "\t\n PERDISTE TUS TRUFAS Y SE LAS CEDES AL OTRO";
+            trufasTotales[0] += trufasTotales[1];
+            trufasTotales[1] = 0;
+            pasarDeRonda = 1;
+        }else if( (dados[0] == dados[1] && dados[0] == 1) || (dados[1] == dados[2] && dados[1] == 1) || (dados[0] == dados[2] && dados[0] == 1) ){
+            cout << "\t\n TE HUNDISTE EN EL BARRO, PERDES TODAS TUS TRUFAS";
+            trufasTotales[1] = 0;
+            pasarDeRonda = 1;
+        }else if( dados[0] != 1 && dados[1] != 1 && dados[2] != 1 ){
+            cout << "\t\n SUMAS TUS TRUFAS";
+            for(int i = 0; i < 3; i++){
+                trufas += dados[i];
+            }
+            contadorTrufas2 += trufas;
+            trufasTotales[1] += trufas;
+        }else if( dados[0] == 1 || dados[1] == 1 || dados[2] == 1 ){
+            cout << "\t\n PERDISTE LAS TRUFAS DE LA RONDA ACTUAL";
+            trufasTotales[1] -= contadorTrufas2;
+            contadorTrufas2 = 0;
+            pasarDeRonda = 1;
+        }
+        cout << "\t\n ¡SUMASTE " << trufas << " TRUFAS!";
+        if(pasarDeRonda == 0){
+            cout << "\t\n ¿CONTINUAR?(S/N): ";
+            cin >> continuar;
+            continuar = toupper(continuar);
+            Beep(500, 100);
+            while(continuar != 'S' && continuar != 'N'){
+                cout << "\t\n TECLA INCORRECTA, ¿CONTINUAR?(S/N): ";
+                cin >> continuar;
+                continuar = toupper(continuar);
+                Beep(500, 100);
+            }
+            if(continuar == 'N'){
+                banderaTirar = 0;
+            }
+
+        }else if(pasarDeRonda == 1){
+            cout << "\t\n PERDISTE TU TURNO.";
+            cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+            getch();
+            Beep(500, 100);
+            banderaTirar = 0;
+        }else{
+            cout << "\t\n ESTAS OBLIGADO A TIRAR DE NUEVO ";
+            cout << "\t\n PRESIONE CUALQUIER TECLA PARA CONTINUAR. ";
+            getch();
+            Beep(500, 100);
+            banderaTirar = 1;
+        }
+        limpiarConsola();
+    }
+}
+
 
 void mostrarGanador(string nombresJugadores[],int trufasTotales[], int contadorOinks1, int contadorOinks2, int maxLanzamiento1,
                    int maxLanzamiento2, string &nombreGanador, string &nombreGanador2, int &puntaje, int &promedioLanzamientos, int lanzamientosJug1[], int lanzamientosJug2[]){
